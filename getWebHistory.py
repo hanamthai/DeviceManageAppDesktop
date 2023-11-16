@@ -39,7 +39,7 @@ def getWebHistory(latestTimestamp):
 
     for row in rows:
         # valid with timestamp to save in DB and spam data
-        if row[5] == 0 or row[5] < latestTimestamp:
+        if row[5] == 0 or row[5] <= latestTimestamp:
             continue
         info.append([row[1],row[3],row[5]])
         

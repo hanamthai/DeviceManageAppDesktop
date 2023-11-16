@@ -43,13 +43,13 @@ def getKeyboardLog(latestTimestamp):
     for row in rows:
         for keyWordGoogleSearch in keyWordGoogleSearches:
             if keyWordGoogleSearch in row[2]:
-                if row[5] == 0 or row[5] < latestTimestamp:
+                if row[5] == 0 or row[5] <= latestTimestamp:
                     continue
                 info.append([row[2],row[3],row[5]])
                 break
         for keyWordYoutubeSearch in keyWordYoutubeSearches:
             if keyWordYoutubeSearch in row[1]:
-                if row[5] == 0 or row[5] < latestTimestamp:
+                if row[5] == 0 or row[5] <= latestTimestamp:
                     continue
                 info.append([row[2][6:],row[3],row[5]])
                 break
