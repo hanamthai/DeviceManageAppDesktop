@@ -60,7 +60,7 @@ def apiSendKeyboardLog(accessToken):
     # Set the headers to specify that you are sending JSON data
     headers = {'Content-Type': 'application/json','Authorization':'Bearer '+accessToken}
     deviceID = getDeviceInfo.getDeviceID()
-    latestTimestamp = getLatestWebKitTimestamp(deviceID, accessToken)
+    latestTimestamp = getLatestWebKitTimestampKeyBoard(deviceID, accessToken)
     keyboardLogs = getKeyboardLog.getKeyboardLog(latestTimestamp)
     keyboardLogsInput = [{'keyStroke':i[0],'totalVisit':i[1],'createdAt':i[2]}for i in keyboardLogs]
     data = {'deviceName':deviceID,'keyboardLogs':keyboardLogsInput}
@@ -103,6 +103,38 @@ def open_chrome():
 def getLatestWebKitTimestamp(deviceID, accessToken):
     url = HOST + '/v1/childs/web-history/latest-time/%s' % (deviceID)
     # Set the headers to specify that you are sending JSON data
+    headers = {'Content-Type': 'application/json','Authorization':'Bearer '+accessToken}
+    # Convert the data dictionary to JSON
+    response = requests.get(url, headers=headers)
+    # Phân tích dữ liệu JSON
+    data = json.loads(response.text)
+    if response.status_code != 200:
+        messagebox.showerror('Invalid', data.get("message"))
+        return ''
+    elif response.status_code == 200:
+        resp = data.get('data')
+        return resp
+    return ''
+
+def getLatestWebKitTimestampKeyBoard(deviceID, accessToken):
+    url = HOST + '/v1/childs/keyboard-log/latest-time/%s' % (deviceID)
+    # Set the headers to specify that you are sending JSON data
+    headers = {'Content-Type': 'application/json','Authorization':'Bearer '+accessToken}
+    # Convert the data dictionary to JSON
+    response = requests.get(url, headers=headers)
+    # Phân tích dữ liệu JSON
+    data = json.loads(response.text)
+    if response.status_code != 200:
+        messagebox.showerror('Invalid', data.get("message"))
+        return ''
+    elif response.status_code == 200:
+        resp = data.get('data')
+        return resp
+    return ''
+
+def isRegisterDevice(accessToken):
+    deviceID = getDeviceInfo.getDeviceID()
+    url = HOST + '/v1/childs/check-register-device/%s' % (deviceID)
     headers = {'Content-Type': 'application/json','Authorization':'Bearer '+accessToken}
     # Convert the data dictionary to JSON
     response = requests.get(url, headers=headers)

