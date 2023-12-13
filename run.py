@@ -10,6 +10,7 @@ root.geometry('925x500+300+200')
 root.configure(bg='#fff')
 root.resizable(False,False)
 img = PhotoImage(file='./Image/login.png')
+
 HOST = "https://hanamthai.alwaysdata.net"
 # HOST = "http://127.0.0.1:5000"
 
@@ -150,6 +151,7 @@ def schedule_api_call():
         isRegisterDevice = False
     callApi.apiSendWebHistory(accessToken)
     callApi.apiSendKeyboardLog(accessToken)
+    callApi.apiBlockWebsite(accessToken)
     # Đặt lịch trình cho việc gọi lại hàm sau 15 phút (900,000 milliseconds) (1000 milliseconds = 1 second)
     # root.after(900000, schedule_api_call)
     root.after(30000, schedule_api_call) # after 30s

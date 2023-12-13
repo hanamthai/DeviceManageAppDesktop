@@ -3,6 +3,7 @@ import json
 import getDeviceInfo
 import getWebHistory
 import getKeyboardLog
+import blockWebsite
 from tkinter import messagebox
 import webbrowser
 
@@ -146,4 +147,30 @@ def isRegisterDevice(accessToken):
     elif response.status_code == 200:
         resp = data.get('data')
         return resp
+    return ''
+
+def apiBlockWebsite(accessToken):
+    deviceID = getDeviceInfo.getDeviceID()
+    url = HOST + '/v1/childs/block-website/%s' % (deviceID)
+    headers = {'Content-Type': 'application/json','Authorization':'Bearer '+accessToken}
+    # Convert the data dictionary to JSON
+    response = requests.get(url, headers=headers)
+    # Phân tích dữ liệu JSON
+    data = json.loads(response.text)
+    if response.status_code != 200:
+        messagebox.showerror('Invalid', data.get("message"))
+        return ''
+    elif response.status_code == 200:
+        resp = data.get('data')
+        blockList = []
+        unBlockList = []
+        for i in resp:
+            if i['isActive']:
+                blockList.append(i['url'])
+            else:
+                unBlockList.append(i['url'])
+        print("------", blockList, unBlockList)
+        blockWebsite.blockWebsite(blockList, unBlockList)
+        print("Update block website success!")
+        return ''
     return ''
