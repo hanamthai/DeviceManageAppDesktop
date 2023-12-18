@@ -1,8 +1,8 @@
 
 def blockWebsite(blockList, unblockList):
     # site_block = ["www.gingersoftware.com", "gingersoftware.com", "google.com.vn"]
-    # host_path = "C:/Windows/System32/drivers/etc/hosts"
-    host_path = "C:/DoAnTotNghiep/hosts"
+    host_path = "C:/Windows/System32/drivers/etc/hosts"
+    # host_path = "C:/DoAnTotNghiep/hosts"
     redirect = "127.0.0.1"
     
     if len(blockList) != 0:
@@ -24,5 +24,3 @@ def blockWebsite(blockList, unblockList):
                     host_file.write(lines)
             host_file.truncate()
     return ''
-
-# blockWebsite(blockList, unblockList)

@@ -154,7 +154,8 @@ def schedule_api_call():
     callApi.apiBlockWebsite(accessToken)
     # Đặt lịch trình cho việc gọi lại hàm sau 15 phút (900,000 milliseconds) (1000 milliseconds = 1 second)
     # root.after(900000, schedule_api_call)
-    root.after(30000, schedule_api_call) # after 30s
+    # root.after(30000, schedule_api_call) # after 30s
+    root.after(15000, schedule_api_call) # after 15s
 
 loginWindow(win2)
 

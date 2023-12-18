@@ -2,8 +2,8 @@ import sqlite3
 import shutil
 import os
 
-keyWordGoogleSearches = ['Google Tìm kiếm','Tìm trên Google','You searched for']
-keyWordYoutubeSearches = ["https://www.youtube.com/results?search_query"]
+keyWordGoogleSearches = ['Google Tìm kiếm','Tìm trên Google','You searched for', 'Google Search']
+keyWordYoutubeSearches = ["https://www.youtube.com/results?search_query", "https://www.facebook.com/search/"]
 
 def getKeyboardLog(latestTimestamp):
     # Truy cập biến môi trường USERPROFILE trên Windows hoặc HOME trên Unix/Linux
@@ -41,6 +41,7 @@ def getKeyboardLog(latestTimestamp):
     info = [] # [[url, totalVisit, createdAt],...]
 
     for row in rows:
+        # print(row)
         for keyWordGoogleSearch in keyWordGoogleSearches:
             if keyWordGoogleSearch in row[2]:
                 if row[5] == 0 or row[5] <= latestTimestamp:
@@ -51,7 +52,7 @@ def getKeyboardLog(latestTimestamp):
             if keyWordYoutubeSearch in row[1]:
                 if row[5] == 0 or row[5] <= latestTimestamp:
                     continue
-                info.append([row[2][6:],row[3],row[5]])
+                info.append([row[2],row[3],row[5]])
                 break
         
     # Đóng kết nối
